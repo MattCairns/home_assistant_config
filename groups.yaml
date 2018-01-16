@@ -33,6 +33,7 @@ living_room:
     - input_boolean.sarah_knitting
 
 
+
 kitchen:
   name: Kitchen
   view: yes
@@ -64,6 +65,8 @@ climate:
   name: Climate
   view: no
   entities:
+    - weather.dark_sky
     - sensor.dark_sky_summary
     - sensor.dark_sky_nearest_storm_distance
     - sensor.dark_sky_precip_intensity
+

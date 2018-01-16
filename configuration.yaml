@@ -72,6 +72,10 @@ device_tracker:
 # Track the sun
 sun:
 
+weather:
+  - platform: darksky
+    api_key: 8100d9ca663ba574ab544a9197bb52fb
+
 # mqtt:
 #   broker: m14.cloudmqtt.com
 #   client_id: Matthew
@@ -92,6 +96,13 @@ media_player:
 # Weather prediction
 sensor:
   - platform: yr
+  - platform: darksky
+    api_key: 8100d9ca663ba574ab544a9197bb52fb
+    monitored_conditions:
+      - summary
+      - icon
+      - nearest_storm_distance
+      - precip_intensity
 
 # Text to speech
 tts:
