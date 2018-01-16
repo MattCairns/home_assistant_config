@@ -1,0 +1,69 @@
+default_view:
+  view: yes
+  icon: mdi:home 
+  entities:
+    - group.living_room
+    - group.bedroom
+    - group.bathroom
+    - group.people
+    - group.climate
+
+living_room_lights:
+  name: Living Room Lights
+  entities:
+    - light.hue_white_lamp_1
+    - light.hue_white_lamp_2
+
+living_room_ceiling:
+  name: Ceiling Light
+  icon: mdi:ceiling-light
+  entities:
+    - light.living_room_ceiling_1
+    - light.living_room_ceiling_2
+
+living_room:
+  name: Living Room
+  entities:
+    - light.hue_white_lamp_1
+    - light.hue_white_lamp_2
+    - group.living_room_ceiling
+    - media_player.chromie
+    - media_player.living_room_speaker
+    - switch.computer
+    - input_boolean.sarah_knitting
+
+
+kitchen:
+  name: Kitchen
+  view: yes
+  entities:
+    - switch.kettle
+    - switch.sink   
+
+bedroom:
+  name: Bedroom
+  view: yes
+  entities:
+    - light.bed_lamp
+    - media_player.bedroom_speaker
+
+bathroom:
+  name: Bathroom
+  view: yes
+  entities:
+    - media_player.bathroom_speaker
+
+people:
+  name: People 
+  view: no
+  entities:
+    - device_tracker.essential
+    - device_tracker.oneplusone
+
+climate:
+  name: Climate
+  view: no
+  entities:
+    - sensor.dark_sky_summary
+    - sensor.dark_sky_nearest_storm_distance
+    - sensor.dark_sky_precip_intensity

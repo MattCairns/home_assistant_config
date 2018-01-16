@@ -1,0 +1,181 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 48.432
+  longitude: -123.359
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 25
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Vancouver
+  # Customization file
+  customize: !include customize.yaml
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+  # api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+
+mqtt:
+  broker: m14.cloudmqtt.com
+  port: 13063
+  client_id: home_assistant_1
+  username: ha
+  password: sunnas1
+
+device_tracker:
+  - platform: owntracks
+    max_gps_accuracy: 20
+    waypoints: True
+    waypoint_whitelist:
+      - jon
+      - ram
+  - platform: ddwrt
+    host: 192.168.1.1
+    username: matt 
+    password: Obsidian
+
+# Track the sun
+sun:
+
+# mqtt:
+#   broker: m14.cloudmqtt.com
+#   client_id: Matthew
+#   username: ksdrtghn
+#   password: QlhGlHjCxSgN
+#   port: 23063
+
+# mqtt:
+#   broker: m14.cloudmqtt.com
+#   client_id: Sarah
+#   username: izyixdzn
+#   password: uG1xc6SqLMqN
+#   port: 28154
+
+media_player:
+  - platform: plex
+
+# Weather prediction
+sensor:
+  - platform: yr
+
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+hue:
+  bridges:
+    - host: 192.168.1.105
+
+light:
+  - platform: tplink
+    name: Bed Lamp
+    host: 192.168.1.17
+
+switch:
+  - platform: tplink
+    name: Sink
+    host: 192.168.1.18
+  - platform: tplink
+    name: Kettle
+    host: 192.168.1.19
+
+scene:
+  - name: Livingroom Normal
+    entities:
+      light.hue_white_lamp_1:
+        state: on
+        brightness_pct: 100
+        transition: 10
+      light.hue_white_lamp_2:
+        state: on
+        brightness_pct: 100
+        transition: 10
+
+  - name: Livingroom Dim 
+    entities:
+      light.hue_white_lamp_1:
+        state: on
+        brightness_pct: 40
+        transition: 10
+      light.hue_white_lamp_2:
+        state: on
+        brightness_pct: 25
+        transition: 10
+
+  - name: Livingroom Knitting 
+    entities:
+      light.hue_white_lamp_1:
+        state: on
+        brightness_pct: 75
+        transition: 10
+      light.hue_white_lamp_2:
+        state: on
+        brightness_pct: 70
+        transition: 10
+
+
+device_sun_light_trigger:
+  light_group: group.living_room
+  device_group: group.all_devices
+
+
+zone:
+  - name: School
+    latitude: 48.463407
+    longitude: -123.311693
+    radius: 450
+    icon: mdi:school 
+
+  - name: Matts Work
+    latitude: 48.469005
+    longitude: -123.329738
+    radius: 100
+    icon: mdi:work 
+
+  - name: Sarahs Work
+    latitude: 48.482479
+    longitude: -123.392216
+    radius: 100
+    icon: mdi:work 

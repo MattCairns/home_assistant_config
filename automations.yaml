@@ -1,0 +1,104 @@
+#Change lighting when watching chromecast
+- alias: "Chromecast paused/stopped"
+  trigger:
+    - platform: state
+      entity_id: media_player.chromie
+      from: 'playing'
+      to: 'paused'
+    - platform: state
+      entity_id: media_player.chromie
+      from: 'playing'
+      to: 'idle'
+    - platform: state
+      entity_id: media_player.chromie
+      from: 'playing'
+      to: 'off'
+  condition:
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
+  action:
+    - service: scene.turn_on
+      entity_id: scene.livingroom_normal
+
+- alias: "Chromecast playing"
+  trigger:
+    - platform: state
+      entity_id: media_player.chromie
+      from: 'paused'
+      to: 'playing'
+    - platform: state
+      entity_id: media_player.chromie
+      from: 'idle'
+      to: 'playing'
+    - platform: state
+      entity_id: media_player.chromie
+      from: 'off'
+      to: 'playing'
+  condition:
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
+  action:
+    - service: scene.turn_on
+      data_template:
+        entity_id: >
+          {% if is_state('input_boolean.sarah_knitting', 'on') %}
+          scene.livingroom_knitting
+          {% elif is_state('input_boolean.sarah_knitting', 'off') %}
+          scene.livingroom_dim
+          {% endif %}
+
+
+#Turn on lights in the morning to wake up.
+- alias: "Turn on lights in morning"
+  trigger:
+    - platform: time
+      at: '06:10:00'
+  condition:
+    - condition: state
+      entity_id: group.all_devices
+      state: 'home'
+    - condition: time
+      weekday:
+        - mon 
+        - tue 
+        - wed 
+        - thu 
+        - fri 
+  action:
+    - service: scene.turn_on
+      entity_id: scene.morning_scene
+
+# # Turn on lights during weather
+- alias: 'Rainy Day'
+  trigger:
+    - platform: state
+      entity_id: sensor.precip_intensity
+      to: 'rain'
+  condition:
+    - condition: state
+      entity_id: group.all_devices
+      state: 'home'
+    - condition: time
+      after: '14:00'
+      before: '23:00'
+  action:
+    - service: scene.turn_on
+      entity_id: scene.livingroom_normal
+
+- alias: 'Rain is over'
+  trigger:
+    - platform: state
+      entity_id: sensor.precip_intensity
+      to: 'None'
+  condition:
+    - condition: state
+      entity_id: sun.sun
+      state: 'sunset'
+      #offset: '-01:00:00'
+  action:
+    - service: scene.turn_off
+      entity_id: scene.livingroom_normal
+
+

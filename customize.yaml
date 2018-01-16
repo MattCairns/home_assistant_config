@@ -1,0 +1,21 @@
+light.bed_lamp:
+  icon: mdi:lamp
+
+switch.computer:
+  icon: mdi:desktop-classic
+
+light.hue_white_lamp_1:
+  icon: mdi:lamp
+  friendly_name: Fireplace Lamp
+
+light.hue_white_lamp_2:
+  icon: mdi:lamp
+  friendly_name: Couch Lamp
+
+switch.kettle:
+  icon: mdi:kettle
+  friendly_name: Kettle 
+
+switch.sink:
+  icon: mdi:led-strip
+  friendly_name: Sink Light
